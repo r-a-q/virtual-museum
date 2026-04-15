@@ -1,0 +1,69 @@
+body {
+    margin: 0;
+}
+
+canvas {
+    height: 100vh !important;
+    display: block;
+}
+
+#canvas-container {
+    position: relative;
+}
+
+.information {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.pop-up-container {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: sans-serif;
+    cursor: none;
+    pointer-events: none;
+}
+
+.pop-up-window {
+    display: flex;
+    gap: 40px;
+    max-width: 80%;
+}
+
+.pop-up-exit-instructions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+}
+
+.pop-up-img {
+    max-height: 80vh;
+    border: 5px solid white;
+    max-width: 50vw;
+    object-fit: contain;
+}
+
+.pop-up-info-box {
+    text-align: left;
+}
+
+.pop-up-info-box > h1 {
+    font-size: 3rem;
+}
+
+.pop-up-info-box > h2 {
+    color: #aaa;
+}
