@@ -1,8 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import {
     Environment,
-    GizmoHelper,
-    GizmoViewport,
     PointerLockControls,
     KeyboardControls
 } from '@react-three/drei'
@@ -12,6 +10,7 @@ import { Suspense, useState, useEffect } from 'react';
 import Frame from "./components/Frame.jsx"
 import Player from './components/Player.jsx'
 import './Museum.css'
+import {getAltTextFromClaude} from "./ai.js"
 
 const map = [
     { name: "forward", keys: ["ArrowUp", "w", "W"]},
@@ -20,15 +19,58 @@ const map = [
     { name: "right", keys: ["ArrowRight", "d", "D"]},
 ]
 
+async function urlToBase64(url) {
+    const response = await fetch(url)
+    const blob = await response.blob()
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve(reader.result.split(',')[1])
+        reader.onerror = reject
+        reader.readAsDataURL(blob)
+    })
+}
+
 export default function Museum() {
 
     const [painting, setPainting] = useState([])
-    const [gallery, setGallery] = useState({}) //be sure to set a gallery state that has gallery info (how many paintings there are)
-    //maybe could have a feature where user selects a time period, and returns paintings from that time period
-
+    const [altText, setAltText] = useState("")
     const [selectedArt, setSelectedArt] = useState(null)
+    const [altTextCache, setAltTextCache] = useState({})
+
+
     useEffect(() => {
-        const relevantFields = `objectid,dated,classification,period,primaryimageurl,images,title,people`
+        if(selectedArt) {
+
+            if (altTextCache[selectedArt.id]) {
+                setAltText(altTextCache[selectedArt.id])
+                return
+            }
+            async function getAltText() {
+
+                setAltText("Generating alternative text...")
+
+                try {
+                    const base64Data = await urlToBase64(selectedArt.primaryImageUrl)
+                    const generatedAltText = await getAltTextFromClaude(base64Data)
+                    setAltText(generatedAltText)
+                    setAltTextCache(prev => ({
+                        ...prev,
+                        [selectedArt.id]: generatedAltText
+                    }))
+                }
+                catch (error) {
+                    console.error(error)
+                    setAltText("Could not generate description")
+                }
+            }
+
+            getAltText()
+
+        }
+    }, [selectedArt, altTextCache])
+
+    useEffect(() => {
+        const relevantFields = `objectid,dated,classification,period,primaryimageurl,title,people`
         const parameters = `classification=Paintings&hasimage=1&lendingpermissionlevel=0`
         const url = `https://api.harvardartmuseums.org/object?${parameters}&apikey=${import.meta.env.VITE_HARVARD_API_KEY}&fields=${relevantFields}&q=_exists_:primaryimageurl&sort=random&size=12`
 
@@ -49,12 +91,6 @@ export default function Museum() {
                         dated: artPiece.dated,
                         period: artPiece.period,
                         primaryImageUrl: artPiece.primaryimageurl,
-                        images: (artPiece.images ? artPiece.images.map(img => ({
-                            altText: img.alttext /*write function where if null/empty, call a function that fills in alt text */,
-                            description: img.description /*write function where if null/empty, call a function that fills in a description - GET RID OF*/,
-                            height: img.height,
-                            width: img.width
-                        })) : [])
                     })).slice(0, 6)
 
                 console.log("Cleaned up Data: ")
@@ -83,9 +119,6 @@ export default function Museum() {
         <div id="canvas-container">
             <Canvas camera={{ position: [0, 1, 6], fov: 50 }} aria-label="3D Virtual Art Gallery">
 
-                <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
-                    <GizmoViewport />
-                </GizmoHelper>
                 <axesHelper args={[10]}/>
 
                 <Suspense fallback={null}>
@@ -138,6 +171,7 @@ export default function Museum() {
                             <h2>{selectedArt.people?.[0]?.name || "Unknown Artist"}</h2>
                             <p><strong>Period: </strong>{selectedArt.period || "Unknown"}</p>
                             <p><strong>Dated: </strong>{selectedArt.dated || "Unknown"}</p>
+                            <p aria-live="polite" aria-atomic="true"><strong>Alt Text:</strong> {altText}</p>
                         </div>
                     </div>
                 </div>

@@ -16,8 +16,6 @@ import * as THREE from 'three'
 export default function Model(props) {
   const { nodes, materials } = useGLTF('/frame.gltf')
     const texture = useTexture(props.paintingURL)
-    console.log("URL being passed:")
-    console.log(props.paintingURL)
     return (
 
         <group {...props} dispose={null}>
