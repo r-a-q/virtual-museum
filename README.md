@@ -1,16 +1,21 @@
-# React + Vite
+# 3D Virtual Museum
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This 3D Virutal Museum generates 6 paintings from the Harvard Art Museum API. Users can walk through the gallery, clicking on each painting to learn more.
 
-Currently, two official plugins are available:
+## How It's Made:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Tech Used: HTML, CSS, JavaScript, React, Reach Three Fiber, Vite
 
-## React Compiler
+The idea started after being inspirted by the Smithsonian's Voyager platform: bringing the museum experience to visitors. 
+I pulled a 3D frame built by Fred Drabble from Sketch Fab (Source: https://sketchfab.com/3d-models/picture-frame-1520-dimensions-2a75286422e64948b1d6626bc9c6d47d) to have a frame to display the paintings in. 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## Optimizations
+* Cached AI genreated alternative texts after user clicked into paniting. Reduced loading times for alternative texts and the program in general
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Next Steps
+* Create loading/welcome screen when user first visits application
+* Create a guided tour option - user uses tab to enter a guided tour to make keyboard navigation simpler and easier
+* Timing for alt text generation - find a way to generate alt text for all paintings displayed to embed alt text into paintings before displayed. Possible use of conditional rendering
+
+## Lessons Learned:
