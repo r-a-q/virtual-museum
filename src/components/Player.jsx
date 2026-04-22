@@ -8,7 +8,7 @@ export default function Player() {
     useFrame(() => {
         const { forward, backward, left, right } = getKeys()
 
-        const speed = 0.1
+        const speed = 0.03
 
         if (forward)
             camera.translateZ(-speed)
