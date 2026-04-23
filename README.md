@@ -10,7 +10,13 @@ https://github.com/user-attachments/assets/64e8902c-35cb-4571-bf92-86476b3f4c20
 Tech Used: HTML, CSS, JavaScript, React, Reach Three Fiber, Vite, Webstorm (IDE)
 
 The idea started after being inspirted by the Smithsonian's Voyager platform: bringing the museum experience to visitors. 
-I pulled a 3D frame built by Fred Drabble from Sketch Fab (Source: https://sketchfab.com/3d-models/picture-frame-1520-dimensions-2a75286422e64948b1d6626bc9c6d47d) to have a frame to display the paintings in. 
+I pulled a 3D frame built by Fred Drabble from Sketch Fab to have a frame to display the paintings in. 
+(Source: https://sketchfab.com/3d-models/picture-frame-1520-dimensions-2a75286422e64948b1d6626bc9c6d47d)
+
+As of now, users use keys W, A, S, and D to navigate through the gallery. When a user wants to learn more about a certain painting, they can hover the crosshair over the image and click to revela a 2D pop-up displaying relevant information about the painting, including: title, artist, year painted, and the period painting is from.
+
+Accessibility:
+In learning more about human-centered design, I'm how accessible my projects are from the get-go. In this development stage, I realized the Harvard Museum Art API does not provide alternative text (alt text) for many of the paintings. My solution has been to provie the painting to Claude API and have Claude generate alt text for the paintings in the gallery. As of now, the alt text is displayed in the 2D pop-up, but this will be later moved into the metadata of the image (in the "alt" attribute).
 
 
 ## Optimizations
@@ -20,5 +26,6 @@ I pulled a 3D frame built by Fred Drabble from Sketch Fab (Source: https://sketc
 * Create loading/welcome screen when user first visits application
 * Create a guided tour option - user uses tab to enter a guided tour to make keyboard navigation simpler and easier
 * Timing for alt text generation - find a way to generate alt text for all paintings displayed to embed alt text into paintings before displayed. Possible use of conditional rendering
+* Dyamnically change sizing of each frame to display painting correctly
 
 ## Lessons Learned:
