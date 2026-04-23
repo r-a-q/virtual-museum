@@ -45,8 +45,8 @@ canvas {
     align-items: center;
     color: white;
     font-family: sans-serif;
-    cursor: none;
-    pointer-events: none;
+    cursor: auto !important;
+    pointer-events: all;
 }
 
 .pop-up-window {

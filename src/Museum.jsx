@@ -74,48 +74,32 @@ export default function Museum() {
         }
     }, [selectedArt, altTextCache])
 
-    useEffect(() => {
-        const relevantFields = `objectid,dated,classification,period,primaryimageurl,title,people`
-        const parameters = `classification=Paintings&hasimage=1&lendingpermissionlevel=0`
-        const url = `https://api.harvardartmuseums.org/object?${parameters}&apikey=${import.meta.env.VITE_HARVARD_API_KEY}&fields=${relevantFields}&q=_exists_:primaryimageurl&sort=random&size=12`
 
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                //console.log(data)
-                const filteredMetaData = data.records.filter(record => record.primaryimageurl !== null)
-                    .map(artPiece => ({
-                        key: artPiece.objectid,
-                        id: artPiece.objectid,
-                        title: artPiece.title,
-                        people: (artPiece.people ? artPiece.people.map(contributor => ({
-                            name: contributor.name,
-                            role: contributor.role
-                        })) : []),
-                        classification: artPiece.classification,
-                        dated: artPiece.dated,
-                        period: artPiece.period,
-                        primaryImageUrl: artPiece.primaryimageurl,
-                    })).slice(0, 6)
-
-                console.log("Cleaned up Data: ")
-                console.log(filteredMetaData)
-                setPainting(filteredMetaData)
-
-            })
-            .catch(err => console.log("Harvard API Error:", err))
-    }, [])
 
     useEffect(() => {
-        const handlePointerLockChange = () => {
-            if (document.pointerLockElement === null && selectedArt) {
+
+        if (selectedArt && document.pointerLockElement) {
+            document.exitPointerLock()
+        }
+
+        const handleKeyDown = (e) => {
+            if (e.key === "Escape" && selectedArt) {
                 setSelectedArt(null)
             }
         }
 
-        document.addEventListener("pointerlockchange", handlePointerLockChange)
+        const handlePointerLockChange = () => {
+            if (!document.pointerLockElement && selectedArt) {
+                selectedArt(null)
+            }
+        }
 
-        return () => document.removeEventListener("pointerlockchange", handlePointerLockChange)
+        document.addEventListener("pointerlockchange", handlePointerLockChange)
+        document.addEventListener("keydown", handleKeyDown)
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown)
+            document.removeEventListener("pointerlockchange", handlePointerLockChange)}
     }, [selectedArt])
 
 
@@ -127,8 +111,8 @@ export default function Museum() {
                 <axesHelper args={[10]}/>
 
                 <Suspense fallback={null}>
-                    <PointerLockControls enabled={!selectedArt}
-                    />
+                    <PointerLockControls enabled={!selectedArt}/>
+
                     <CleanHarvardData getApiData={getApiData}/>
                     <Player />
                     <Room />
@@ -143,7 +127,9 @@ export default function Museum() {
                                     key={element.key}
                                     paintingURL={element.primaryImageUrl}
                                     position={[onOppositeWall, 0, (zPosition * 6) - 6]}
-                                    onClick={() => setSelectedArt(element)}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        setSelectedArt(element)}}
                                 />
                             )
                             }
@@ -179,24 +165,15 @@ export default function Museum() {
                             <p><strong>Dated: </strong>{selectedArt.dated || "Unknown"}</p>
                             <p aria-live="polite" aria-atomic="true"><strong>Alt Text:</strong> {altText}</p>
                         </div>
+                        <div className="link-to-harvard-website">
+                            <a href={selectedArt.url} target="_blank"><p>Link back to painting on the Harvard Art Museum Website</p></a>
+                        </div>
                     </div>
                 </div>
             )}
 
             {/*Crosshair*/}
-            <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: '6px',
-                height: '6px',
-                backgroundColor: 'white',
-                borderRadius: '50%',
-                transform: 'translate(-50%, -50%)',
-                pointerEvents: 'none',
-                zIndex: 2,
-                border: '1px solid black'
-            }} />
+            <div className="crosshair" style={{zIndex: 2}}/>
 
         </div>
         </KeyboardControls>
