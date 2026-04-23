@@ -11,6 +11,7 @@ import Frame from "./components/Frame.jsx"
 import Player from './components/Player.jsx'
 import './Museum.css'
 import {getAltTextFromClaude} from "./ai.js"
+import CleanHarvardData from "./components/CleanHarvardData.jsx";
 
 const map = [
     { name: "forward", keys: ["ArrowUp", "w", "W"]},
@@ -36,6 +37,10 @@ export default function Museum() {
     const [altText, setAltText] = useState("")
     const [selectedArt, setSelectedArt] = useState(null)
     const [altTextCache, setAltTextCache] = useState({})
+
+    const getApiData = (data) => {
+        setPainting(data)
+    }
 
 
     useEffect(() => {
@@ -124,6 +129,7 @@ export default function Museum() {
                 <Suspense fallback={null}>
                     <PointerLockControls enabled={!selectedArt}
                     />
+                    <CleanHarvardData getApiData={getApiData}/>
                     <Player />
                     <Room />
                     <group>
