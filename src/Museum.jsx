@@ -10,8 +10,8 @@ import { Suspense, useState, useEffect } from 'react';
 import Frame from "./components/Frame.jsx"
 import Player from './components/Player.jsx'
 import './Museum.css'
-import {getAltTextFromClaude} from "./ai.js"
 import CleanHarvardData from "./components/CleanHarvardData.jsx";
+import ArtPopUpInfo from './components/ArtPopUpInfo.jsx'
 
 const map = [
     { name: "forward", keys: ["ArrowUp", "w", "W"]},
@@ -20,60 +20,17 @@ const map = [
     { name: "right", keys: ["ArrowRight", "d", "D"]},
 ]
 
-async function urlToBase64(url) {
-    const response = await fetch(url)
-    const blob = await response.blob()
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result.split(',')[1])
-        reader.onerror = reject
-        reader.readAsDataURL(blob)
-    })
-}
+
 
 export default function Museum() {
 
     const [painting, setPainting] = useState([])
-    const [altText, setAltText] = useState("")
     const [selectedArt, setSelectedArt] = useState(null)
     const [altTextCache, setAltTextCache] = useState({})
 
     const getApiData = (data) => {
         setPainting(data)
     }
-
-
-    useEffect(() => {
-        if(selectedArt) {
-
-            if (altTextCache[selectedArt.id]) {
-                setAltText(altTextCache[selectedArt.id])
-                return
-            }
-            async function getAltText() {
-
-                setAltText("Generating alternative text...")
-
-                try {
-                    const base64Data = await urlToBase64(selectedArt.primaryImageUrl)
-                    const generatedAltText = await getAltTextFromClaude(base64Data)
-                    setAltText(generatedAltText)
-                    setAltTextCache(prev => ({
-                        ...prev,
-                        [selectedArt.id]: generatedAltText
-                    }))
-                }
-                catch (error) {
-                    console.error(error)
-                    setAltText("Could not generate description")
-                }
-            }
-
-            getAltText()
-
-        }
-    }, [selectedArt, altTextCache])
-
 
 
     useEffect(() => {
@@ -146,31 +103,11 @@ export default function Museum() {
 
             </Canvas>
 
-            {/*2D Pop-up*/}
-            {selectedArt && (
-                <div className="pop-up-container"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="modal-title"
-                    style={{ zIndex: 10}}
-                >
-                    <p className="pop-up-exit-instructions">Press esc to exit pop-up view</p>
-                    <div className="pop-up-window">
-                        <img className="pop-up-img" src={selectedArt.primaryImageUrl} alt={`Close up of ${selectedArt.title}`}/>
-                        
-                        <div className="pop-up-info-box">
-                            <h1>{selectedArt.title}</h1>
-                            <h2>{selectedArt.people?.[0]?.name || "Unknown Artist"}</h2>
-                            <p><strong>Period: </strong>{selectedArt.period || "Unknown"}</p>
-                            <p><strong>Dated: </strong>{selectedArt.dated || "Unknown"}</p>
-                            <p aria-live="polite" aria-atomic="true"><strong>Alt Text:</strong> {altText}</p>
-                        </div>
-                        <div className="link-to-harvard-website">
-                            <a href={selectedArt.url} target="_blank"><p>Link back to painting on the Harvard Art Museum Website</p></a>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {selectedArt && <ArtPopUpInfo
+                selectedArt={selectedArt}
+                altTextCache={altTextCache}
+                setAltTextCache={setAltTextCache}
+            />}
 
             {/*Crosshair*/}
             <div className="crosshair" style={{zIndex: 2}}/>
