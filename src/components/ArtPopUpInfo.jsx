@@ -12,7 +12,7 @@ async function urlToBase64(url) {
     })
 }
 
-export default function ArtPopUpInfo({ selectedArt, altTextCache, setAltTextCache }) {
+export default function ArtPopUpInfo({ selectedArt, setSelectedArt, altTextCache, setAltTextCache }) {
     const [altText, setAltText] = useState("")
 
     useEffect(() => {
@@ -52,8 +52,15 @@ export default function ArtPopUpInfo({ selectedArt, altTextCache, setAltTextCach
              aria-labelledby="modal-title"
              style={{ zIndex: 10}}
         >
-            <p className="pop-up-exit-instructions">Press esc to exit pop-up view</p>
+
             <div className="pop-up-window">
+                <button
+                    className="pop-up-button"
+                    onClick={() => setSelectedArt(null)}
+                    aria-label="Close details"
+                >
+                    &times;
+                </button>
                 <img className="pop-up-img" src={selectedArt.primaryImageUrl} alt={altText}/>
 
                 <div className="pop-up-info-box">

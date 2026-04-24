@@ -32,7 +32,7 @@ canvas {
 
 .pop-up-container {
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -46,14 +46,76 @@ canvas {
     color: white;
     font-family: sans-serif;
     cursor: auto !important;
-    pointer-events: all;
+    pointer-events: all !important;
 }
 
 .pop-up-window {
+    position: relative;
     display: flex;
     gap: 40px;
     max-width: 80%;
+    padding: 60px 40px 40px 40px;
+    flex-direction: row;
 }
+
+.pop-up-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    line-height: 1;
+    background: white;
+    color: black;
+    font-size: 2rem;
+    border: 1.5px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 50;
+    transition: all 0.2s ease-in-out;
+}
+
+.pop-up-button:hover {
+    background: #f0f0f0;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.pop-up-button:active {
+    transform: scale(0.95);
+}
+
+.pop-up-button:focus-visible {
+    outline: 4px solid #007bff;
+    outline-offset: 2px;
+}
+
+.link-to-harvard-website {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.link-to-harvard-website a {
+    width: 50px;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+}
+
+.link-to-harvard-website a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
 
 .pop-up-exit-instructions {
     position: absolute;
@@ -63,18 +125,27 @@ canvas {
 }
 
 .pop-up-img {
-    max-height: 80vh;
-    border: 5px solid white;
-    max-width: 50vw;
+    max-height: 70vh;
+    max-width: 45vw;
+    height: auto;
+    width: auto;
     object-fit: contain;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 5px solid white;
 }
 
 .pop-up-info-box {
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
     text-align: left;
 }
 
 .pop-up-info-box > h1 {
-    font-size: 3rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    margin-top: 0;
+    margin-bottom: 1rem;
 }
 
 .pop-up-info-box > h2 {
