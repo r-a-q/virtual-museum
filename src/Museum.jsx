@@ -32,7 +32,6 @@ export default function Museum() {
         setPainting(data)
     }
 
-
     useEffect(() => {
 
         if (selectedArt && document.pointerLockElement) {
@@ -45,18 +44,11 @@ export default function Museum() {
             }
         }
 
-        const handlePointerLockChange = () => {
-            if (!document.pointerLockElement && selectedArt) {
-                selectedArt(null)
-            }
-        }
-
-        document.addEventListener("pointerlockchange", handlePointerLockChange)
         document.addEventListener("keydown", handleKeyDown)
 
         return () => {
             document.removeEventListener("keydown", handleKeyDown)
-            document.removeEventListener("pointerlockchange", handlePointerLockChange)}
+        }
     }, [selectedArt])
 
 
@@ -68,7 +60,7 @@ export default function Museum() {
                 <axesHelper args={[10]}/>
 
                 <Suspense fallback={null}>
-                    <PointerLockControls enabled={!selectedArt}/>
+                    {!selectedArt && <PointerLockControls/>}
 
                     <CleanHarvardData getApiData={getApiData}/>
                     <Player />
@@ -105,6 +97,7 @@ export default function Museum() {
 
             {selectedArt && <ArtPopUpInfo
                 selectedArt={selectedArt}
+                setSelectedArt={setSelectedArt}
                 altTextCache={altTextCache}
                 setAltTextCache={setAltTextCache}
             />}
