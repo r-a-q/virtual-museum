@@ -68,7 +68,6 @@ export default function ArtPopUpInfo({ selectedArt, setSelectedArt, altTextCache
                     <h2>{selectedArt.people?.[0]?.name || "Unknown Artist"}</h2>
                     <p><strong>Period: </strong>{selectedArt.period || "Unknown"}</p>
                     <p><strong>Dated: </strong>{selectedArt.dated || "Unknown"}</p>
-                    <p aria-live="polite" aria-atomic="true"><strong>Alt Text:</strong>{altText}</p>
                 </div>
                 <div className="link-to-harvard-website">
                     <a href={selectedArt.url} target="_blank"><p>View on Harvard Art Museum Website</p></a>
