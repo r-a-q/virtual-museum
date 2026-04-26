@@ -2,7 +2,7 @@
 
 This 3D Virutal Museum generates 6 paintings from the Harvard Art Museum API. Users can walk through the gallery, clicking on each painting to learn more.
 
-https://github.com/user-attachments/assets/64e8902c-35cb-4571-bf92-86476b3f4c20
+https://github.com/user-attachments/assets/986dfb4b-acdc-4d7a-9f46-237af7336665
 
 
 ## How It's Made:
@@ -16,8 +16,10 @@ I pulled a 3D frame built by Fred Drabble from Sketch Fab to have a frame to dis
 As of now, users use keys W, A, S, and D to navigate through the gallery. When a user wants to learn more about a certain painting, they can hover the crosshair over the image and click to revela a 2D pop-up displaying relevant information about the painting, including: title, artist, year painted, and the period painting is from.
 
 Accessibility:
-In learning more about human-centered design, I'm how accessible my projects are from the get-go. In this development stage, I realized the Harvard Museum Art API does not provide alternative text (alt text) for many of the paintings. My solution has been to provie the painting to Claude API and have Claude generate alt text for the paintings in the gallery. As of now, the alt text is displayed in the 2D pop-up, but this will be later moved into the metadata of the image (in the "alt" attribute).
+In learning more about human-centered design, I'm how accessible my projects are from the get-go. In this development stage, I realized the Harvard Museum Art API does not provide alternative text (alt text) for many of the paintings. My solution has been to provie the painting to Claude API and have Claude generate alt text for the paintings in the gallery. 
+Updated: Moved from showing alt text as a description to alt attribute in source code:
 
+https://github.com/user-attachments/assets/2ed622e8-7381-484a-a3e3-b9edb65ace5b
 
 ## Optimizations
 * Cached AI genreated alternative texts after user clicked into paniting. Reduced loading times for alternative texts and the program in general
