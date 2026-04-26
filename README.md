@@ -29,5 +29,6 @@ https://github.com/user-attachments/assets/2ed622e8-7381-484a-a3e3-b9edb65ace5b
 * Create a guided tour option - user uses tab to enter a guided tour to make keyboard navigation simpler and easier
 * ~~Timing for alt text generation - find a way to generate alt text for all paintings displayed to embed alt text into paintings before displayed. Possible use of conditional rendering~~
 * Dyamnically change sizing of each frame to display painting correctly
+* Create a "next gallery" feature to generate 6 new images
 
 ## Lessons Learned:
