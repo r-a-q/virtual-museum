@@ -30,5 +30,9 @@ https://github.com/user-attachments/assets/2ed622e8-7381-484a-a3e3-b9edb65ace5b
 * ~~Timing for alt text generation - find a way to generate alt text for all paintings displayed to embed alt text into paintings before displayed. Possible use of conditional rendering~~
 * Dyamnically change sizing of each frame to display painting correctly
 * Create a "next gallery" feature to generate 6 new images
+* Implement Voyager for a more 3D experience
 
 ## Lessons Learned:
+* Project Management - had to learn how to manage my time with balancing school and making progress on the project. I drafted a timeline to be able to learn a new skill, when to start working, and what milestones I wanted to hit when.
+* Learning Quickly - Wanted to learn React & React Three Fiber to render 3D frames and create the museum itself
+* Thinking about the person behind the screen - I was able to put into practice what I've learned from my Computer Ethics class, thinking of the experience of those using my program. This is why I prioritized accessibility and spent time generating alt text with AI. This project helped me exercise that skill, which I want to continue building as I grow as a developer.
