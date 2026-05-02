@@ -10,19 +10,22 @@ https://github.com/user-attachments/assets/986dfb4b-acdc-4d7a-9f46-237af7336665
 Tech Used: HTML, CSS, JavaScript, React, Reach Three Fiber, Vite, Webstorm (IDE)
 
 The idea started after being inspirted by the Smithsonian's Voyager platform: bringing the museum experience to visitors. 
-I pulled a 3D frame built by Fred Drabble from Sketch Fab to have a frame to display the paintings in. 
+I pulled a 3D frame built by Fred Drabble from Sketch Fab to have a frame to display the paintings in.
+
 (Source: https://sketchfab.com/3d-models/picture-frame-1520-dimensions-2a75286422e64948b1d6626bc9c6d47d)
 
 As of now, users use keys W, A, S, and D to navigate through the gallery. When a user wants to learn more about a certain painting, they can hover the crosshair over the image and click to revela a 2D pop-up displaying relevant information about the painting, including: title, artist, year painted, and the period painting is from.
 
 Accessibility:
 In learning more about human-centered design, I'm how accessible my projects are from the get-go. In this development stage, I realized the Harvard Museum Art API does not provide alternative text (alt text) for many of the paintings. My solution has been to provie the painting to Claude API and have Claude generate alt text for the paintings in the gallery. 
+
 Updated: Moved from showing alt text as a description to alt attribute in source code:
 
 https://github.com/user-attachments/assets/2ed622e8-7381-484a-a3e3-b9edb65ace5b
 
 Requirements to Run:
 Since the virtual museum pulls data from the Harvard Art Museum API, you will need to get your own key from them. More information here: https://harvardartmuseums.org/collections/api
+
 This program also generates alt text from the Claude API. You will also need to get this from the Claude API token.
 
 ## Optimizations
