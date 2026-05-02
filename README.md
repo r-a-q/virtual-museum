@@ -21,6 +21,10 @@ Updated: Moved from showing alt text as a description to alt attribute in source
 
 https://github.com/user-attachments/assets/2ed622e8-7381-484a-a3e3-b9edb65ace5b
 
+Requirements to Run:
+Since the virtual museum pulls data from the Harvard Art Museum API, you will need to get your own key from them. More information here: https://harvardartmuseums.org/collections/api
+This program also generates alt text from the Claude API. You will also need to get this from the Claude API token.
+
 ## Optimizations
 * Cached AI genreated alternative texts after user clicked into paniting. Reduced loading times for alternative texts and the program in general
 
