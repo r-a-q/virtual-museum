@@ -13,6 +13,7 @@ import './Museum.css'
 import CleanHarvardData from "./components/CleanHarvardData.jsx";
 import ArtPopUpInfo from './components/ArtPopUpInfo.jsx'
 
+//map our keyboard commands to the keyboard keys
 const map = [
     {name: "forward", keys: ["ArrowUp", "w", "W"]},
     {name: "backward", keys: ["ArrowDown", "s", "S"]},
