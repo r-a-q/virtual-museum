@@ -8,27 +8,35 @@ Title: PICTURE FRAME 15*20 dimensions
 */
 
 
-
 import React from 'react'
-import { useGLTF, useTexture } from '@react-three/drei'
+import {useGLTF, useTexture} from '@react-three/drei'
 import * as THREE from 'three'
 
+/**
+ * displays 3D frame and a painting on the virtual museum walls
+ * @param props - pre-generated props from the file import and painting url
+ * @returns {React.JSX.Element} - 3D frame with painting within frame
+ * @constructor
+ */
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/frame.gltf')
+    const {nodes, materials} = useGLTF('/frame.gltf')
+    //map painting image to be texture within the 3D frame - this image url will be displayed
     const texture = useTexture(props.paintingURL)
     return (
 
         <group {...props} dispose={null}>
-            <group rotation={[0, 0, 0]} position={[0,1,0]}>
+            <group rotation={[0, 0, 0]} position={[0, 1, 0]}>
                 <group rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={0.1}>
                     <mesh geometry={nodes.painting_aiStandardSurface1_0.geometry} position={[0, -0.884, 0]}>
+                        {/*actual display of the image - double sided*/}
                         <meshStandardMaterial map={texture} side={THREE.DoubleSide}/>
                     </mesh>
-          <mesh geometry={nodes.frame_lambert1_0.geometry} material={materials.lambert1} position={[0, 0.86, 0]} scale={[0.942, 0.89, 0.942]} />
+                    <mesh geometry={nodes.frame_lambert1_0.geometry} material={materials.lambert1}
+                          position={[0, 0.86, 0]} scale={[0.942, 0.89, 0.942]}/>
+                </group>
+            </group>
         </group>
-      </group>
-    </group>
-  )
+    )
 }
 
 useGLTF.preload('/frame.gltf')
