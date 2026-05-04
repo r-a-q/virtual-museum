@@ -1,10 +1,16 @@
 import Anthropic from "@anthropic-ai/sdk"
 
+//api key to use claude code
 const anthropic = new Anthropic({
     apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
     dangerouslyAllowBrowser: true,
 })
 
+/**
+ * have claude api generate alternative text for a painting
+ * @param base64Data - image in base 64
+ * @returns {Promise<string>}
+ */
 export async function getAltTextFromClaude(base64Data) {
 
     const msg = await anthropic.messages.create({
@@ -24,6 +30,7 @@ export async function getAltTextFromClaude(base64Data) {
                     },
                     {
                         type: "text",
+                        //prompt to give AI API - best practices come from harvard's best practices recommendations
                         text: "You will be given a url for a painting. You will generate alternative text of the image relevant for screen readers. " +
                             "Include the painting style in the description" +
                             "Follow the best practices:" +
@@ -39,5 +46,6 @@ export async function getAltTextFromClaude(base64Data) {
             }
         ]
     })
+    //return the alternative text ai generated
     return msg.content[0].text
 }
