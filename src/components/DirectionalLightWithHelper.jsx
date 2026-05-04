@@ -1,7 +1,12 @@
-import { useRef } from 'react'
-import { useHelper } from '@react-three/drei'
-import { DirectionalLightHelper, CameraHelper } from 'three'
+import {useRef} from 'react'
+import {useHelper} from '@react-three/drei'
+import {DirectionalLightHelper, CameraHelper} from 'three'
 
+/**
+ * allows the inside of the virtual museum to be lit up
+ * @returns {React.JSX.Element} - light source
+ * @constructor
+ */
 export default function DirectionalLightWithHelper() {
     const light = useRef()
     useHelper(light, DirectionalLightHelper, 2, "crimson")
