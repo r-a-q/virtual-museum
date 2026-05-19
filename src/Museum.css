@@ -19,7 +19,6 @@ canvas {
     height: 6px;
     background-color: white;
     border-radius: 50%;
-    transform: translate(-50%, -50%);
     pointer-events: none;
     border: 1px solid black;
 }
